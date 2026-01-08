@@ -1,16 +1,64 @@
-# React + Vite
+# Movie Search App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive movie search application built with React and Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Real-time Search - Find movies instantly with debounced search
+- Responsive Design - Works seamlessly on desktop and mobile
+- Pagination - Browse through extensive movie collections
+- Fast Performance - Built with Vite for optimal loading speeds
+- Modern UI - Clean design with Tailwind CSS
+- Movie Details - View ratings, release dates, and movie posters
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React 18, Vite
+- **Styling**: Tailwind CSS
+- **API**: The Movie Database (TMDB)
+- **Hooks**: Custom debouncing with react-use
+- **State Management**: React Hooks (useState, useEffect)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+- TMDB API key (Get one at https://www.themoviedb.org/settings/api)
+
+### Installation
+
+1. Clone the repository
+git clone https://github.com/yourusername/movie-search-app.git
+cd movie-search-app
+
+2. Install dependencies
+npm install
+
+3. Create environment file
+cp .env.example .env
+
+4. Add your TMDB API key to `.env`
+VITE_TMDB_API_KEY=your_api_key_here
+
+5. Start the development server
+npm run dev
+
+## Usage
+
+1. **Search Movies**: Type in the search bar to find movies by title
+2. **Browse Popular**: View trending movies when no search term is entered
+3. **Navigate Pages**: Use pagination controls to browse through results
+4. **View Details**: Each movie card displays title, rating, and poster
+
+
+## API Integration
+
+This app uses The Movie Database (TMDB) API v3. Key endpoints:
+- `/discover/movie` - Popular movies
+- `/search/movie` - Search functionality
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.

@@ -5,7 +5,7 @@ const Search = ({searchTerm, setSearchTerm}) => {
   return (
     <div className='search'>
         <div>
-            <img src="search.png" alt="search" />
+            <img src={`${import.meta.env.BASE_URL}search.png`} alt="search" />
 
             <input 
             type="text"

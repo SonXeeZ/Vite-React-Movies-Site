@@ -83,7 +83,7 @@ const App = () => {
       
       <div className="wrapper">
         <header>
-          <img src="./hero-img.png" alt="Hero Banner" />
+          <img src={`${import.meta.env.BASE_URL}hero-img.png`} alt="Hero Banner" />
           <h1>Search <span className='text-gradient'>Movies</span> you will <span className='text-gradient'>Enjoy!</span></h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>

@@ -4,6 +4,7 @@ import Spinner from './Components/Spinner';
 import MovieCard from './Components/MovieCard';
 import {useDebounce, useSetState} from 'react-use'
 import Pagination from './Components/Pagination';
+import heroImg from './assets/hero-img.png'
 
 const API_BASE_URL = 'https://api.themoviedb.org/3'
 
@@ -79,11 +80,9 @@ const App = () => {
   return (
     <main>
 
-      <div className="pattern" />
-      
       <div className="wrapper">
         <header>
-          <img src={`${import.meta.env.BASE_URL}hero-img.png`} alt="Hero Banner" />
+            <img src={heroImg} alt="Hero Banner" />
           <h1>Search <span className='text-gradient'>Movies</span> you will <span className='text-gradient'>Enjoy!</span></h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>

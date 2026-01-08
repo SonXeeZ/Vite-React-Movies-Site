@@ -1,11 +1,12 @@
 import React from 'react'
+import searchIcon from '../assets/search.png'
 
 
 const Search = ({searchTerm, setSearchTerm}) => {
   return (
     <div className='search'>
         <div>
-            <img src={`${import.meta.env.BASE_URL}search.png`} alt="search" />
+                <img src={searchIcon} alt="search" />
 
             <input 
             type="text"

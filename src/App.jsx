@@ -1,0 +1,120 @@
+import { useEffect, useState, useRef } from 'react'
+import Search from './Components/Search'
+import Spinner from './Components/Spinner';
+import MovieCard from './Components/MovieCard';
+import {useDebounce, useSetState} from 'react-use'
+import Pagination from './Components/Pagination';
+
+const API_BASE_URL = 'https://api.themoviedb.org/3'
+
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+const API_OPTIONS = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${API_KEY}`
+  }
+}
+
+const App = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [movieList, setMovieList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const listRef = useRef(null);
+
+  const scrollToList = () => {
+    if(listRef.current){
+      listRef.current.scrollIntoView ({ behavior: 'smooth', block: 'start'});
+    }
+  }
+
+  useDebounce(() => setDebouncedSearchTerm(searchTerm),500,[searchTerm]);
+
+  const fetchMovies = async (query = '', page = 1) => {
+    setIsLoading(true);
+    setErrorMessage('');
+
+    try{
+      const endpoint = query
+      ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&page=${page}`
+      : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc&page=${page}`;
+
+      const response = await fetch(endpoint, API_OPTIONS);
+      
+      if(!response.ok){
+        throw new Error('Failed to fetch movies');
+      }
+
+      const data = await response.json();
+
+      if(data.Respone === 'False'){
+        setErrorMessage(data.Error || 'Failed to fetch movies.')
+        setMovieList([]);
+        return;
+      }
+      setMovieList(data.results || []);
+      setTotalPages(data.total_pages || 1);
+
+    } catch(error){
+      console.error(`Error fetching movies. ${error}`);
+      setErrorMessage('Error fetching movies. Plase Try again later.');
+    }finally{
+      setIsLoading(false);
+    }
+  }
+  
+  useEffect(() => {
+    fetchMovies(debouncedSearchTerm, currentPage);
+  }, [debouncedSearchTerm, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm])
+  
+  return (
+    <main>
+
+      <div className="pattern" />
+      
+      <div className="wrapper">
+        <header>
+          <img src="./hero-img.png" alt="Hero Banner" />
+          <h1>Search <span className='text-gradient'>Movies</span> you will <span className='text-gradient'>Enjoy!</span></h1>
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </header>
+
+        <section className='all-movies' ref={listRef}>
+          <h2 className='mt-[40px]'>Top Trending</h2>
+
+          {isLoading ? (
+            <Spinner />
+          ) : errorMessage ? (
+            <p className='text-red-500'>{errorMessage}</p>
+          ): (
+            <ul>
+              {movieList.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </ul>
+          )}
+
+          {!isLoading && !errorMessage && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              onScrollToList={scrollToList}
+            />
+          )}
+        </section>
+        </div>
+    </main>
+  )
+}
+
+export default App

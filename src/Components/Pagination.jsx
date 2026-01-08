@@ -13,7 +13,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, onScrollToList}) =>
             onClick={()=> handlePageChange(currentPage-1)}
             disabled={currentPage === 1}
             >
-            Previus
+            Previous
         </button>
 
         <span>{currentPage} / {totalPages}</span>
